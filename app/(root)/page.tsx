@@ -1,4 +1,3 @@
-import {toast} from "sonner";
 import SearchForm from "@/components/SearchForm";
 import WeatherCard from "@/components/WeatherCard";
 

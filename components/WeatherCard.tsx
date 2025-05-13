@@ -14,7 +14,7 @@ const WeatherCard = ({
     timezone
 }: {city: string, description?: string, timezone?: string}) => {
     return (
-        <Link href={'/weather/' + city}>
+        <Link href={`/weather/${city}`}>
             <Card className="py-5 w-[380px]">
                 <CardHeader>
                     <CardTitle>{city}</CardTitle>
