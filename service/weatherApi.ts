@@ -19,7 +19,10 @@ class WeatherAPI {
         };
     }
 
-    private async fetchData<T>(url: string, params: Record<string, string | number>): Promise<T> {
+    private async fetchData<T>(
+        url: string,
+        params: Record<string, string | number>
+    ): Promise<T> {
         const response = await api.get<T>(url, { params });
         return response.data;
     }
@@ -30,7 +33,7 @@ class WeatherAPI {
             lon,
             units: "metric",
         });
-        return this.fetchData<WeatherData>(`/weather`, params);
+        return this.fetchData<WeatherData>(`${API_CONFIG.BASE_URL}/weather`, params);
     }
 
     async getForecast({ lat, lon }: Coordinates): Promise<ForecastData> {
@@ -39,16 +42,7 @@ class WeatherAPI {
             lon,
             units: "metric",
         });
-        return this.fetchData<ForecastData>(`/forecast`, params);
-    }
-
-    async reverseGeocode({ lat, lon }: Coordinates): Promise<GeocodingResponse[]> {
-        const params = this.createParams({
-            lat,
-            lon,
-            limit: 1,
-        });
-        return this.fetchData<GeocodingResponse[]>(`/reverse`, params);
+        return this.fetchData<ForecastData>(`${API_CONFIG.BASE_URL}/forecast`, params);
     }
 
     async searchLocations(query: string): Promise<GeocodingResponse[]> {
@@ -56,7 +50,7 @@ class WeatherAPI {
             q: query,
             limit: 5,
         });
-        return this.fetchData<GeocodingResponse[]>(`/direct`, params);
+        return this.fetchData<GeocodingResponse[]>(`${API_CONFIG.GEO}/direct`, params);
     }
 }
 
