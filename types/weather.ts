@@ -58,3 +58,20 @@ export interface ForecastData {
         sunset: number;
     };
 }
+
+export interface ForecastItem {
+    temp_min: number;
+    temp_max: number;
+    humidity: number;
+    wind: {
+        speed: number;
+        deg: number;
+    };
+    weather: {
+        id: number;
+        main: string;
+        description: string;
+        icon: string;
+    };
+    date: number;
+}

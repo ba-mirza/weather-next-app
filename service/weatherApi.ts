@@ -40,6 +40,7 @@ class WeatherAPI {
         const params = this.createParams({
             lat,
             lon,
+            cnt: 7,
             units: "metric",
         });
         return this.fetchData<ForecastData>(`${API_CONFIG.BASE_URL}/forecast`, params);

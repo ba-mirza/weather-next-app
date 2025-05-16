@@ -25,7 +25,7 @@ const WeatherCard = ({weatherData}: {weatherData: WeatherData}) => {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Link href={`/weatherDetails/${weatherData.name}`}>
+                    <Link href={`/weatherDetails/${weatherData.name}/?lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}`}>
                         <CardTitle className="flex justify-between mb-3">
                             <span>{weatherData.name}, {weatherData.sys.country}</span>
                             <Image width={32} height={32} src={`${IMAGE_URL.FLAG}${weatherData.sys.country}.svg`} alt={weatherData.sys.country} />
