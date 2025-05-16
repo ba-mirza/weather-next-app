@@ -5,7 +5,10 @@ import {ForecastData, ForecastItem} from "@/types/weather";
 import {format} from "date-fns";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
-export default async function WeatherPage({params, searchParams}: {params: {slug: string}, searchParams: { lat: string; lon: string }}) {
+export default async function WeatherPage(
+    {params, searchParams}:
+    {params: {slug: string}, searchParams: { lat: string; lon: string }}
+) {
 
     const {lon, lat} = searchParams;
     const parsedCoords = {

@@ -13,12 +13,17 @@ import Image from "next/image";
 import {IMAGE_URL} from "@/config";
 import {WeatherData} from "@/types/weather";
 import {toast} from "sonner";
+import weatherPersistenceStore from "@/store/weatherStore";
 
 
-const WeatherCard = ({weatherData}: {weatherData: WeatherData}) => {
+const WeatherCard = (
+    {weatherData, viewBtn = true}:
+    {weatherData: WeatherData, viewBtn?: boolean}
+) => {
+    const setStorage = weatherPersistenceStore((state) => state.setStorage);
 
     return (
-            <Card className="py-5 w-[380px]">
+            <Card className="py-5 w-[380px] m-3">
                 <CardHeader>
                     <CardTitle>
                         Weather
@@ -44,15 +49,21 @@ const WeatherCard = ({weatherData}: {weatherData: WeatherData}) => {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button variant="outline"
-                            onClick={() => {
-                                toast("Added to Favorites", {
-                                    description: new Date().toDateString(),
-                                    position: "bottom-center",
-                                    duration: 2000,
-                                })
-                            }}
-                    >Add to Favorites</Button>
+                    {
+                        viewBtn && (
+                            <Button variant="outline"
+                                    onClick={() => {
+                                        setStorage(weatherData);
+
+                                        toast("Added to Favorites", {
+                                            description: new Date().toDateString(),
+                                            position: "bottom-center",
+                                            duration: 2000,
+                                        })
+                                    }}
+                            >Add to Favorites</Button>
+                        )
+                    }
                 </CardFooter>
             </Card>
     )

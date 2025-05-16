@@ -1,30 +1,37 @@
-import { weatherAPI } from "@/service/weatherApi";
 import {create} from "zustand";
-import { Coordinates, ForecastData, WeatherData } from '../types/weather';
+import {WeatherData} from "@/types/weather";
 
 type State = {
-    currentCity: WeatherData | null;
-    currentCityForecast: ForecastData | null;
+    favorites: WeatherData[];
 }
 
 type Action = {
-    getCurrentWeather: (queryName: string) => void;
-    getForecastWeather: (coords: Coordinates) => void;
+    setStorage: (weatherData: WeatherData) => void;
+    getStorage: () => WeatherData[];
 }
 
-const weatherStore = create<State & Action>()((set) => ({
-    currentCity: null,
-    currentCityForecast: null,
-    getCurrentWeather: async (queryName: string) => {
-        const coords: Coordinates[] = await weatherAPI.searchLocations(queryName);
-        const {lat, lon} = coords[0];
-        const currentWeather: WeatherData = await weatherAPI.getCurrentWeather({lat, lon})
-        set({currentCity: currentWeather});
-        console.log({coords: coords, currentWeather: currentWeather.weather})
+type PersistenceType = State & Action;
+
+const weatherPersistenceStore = create<PersistenceType>()((set) => ({
+    favorites: [],
+    setStorage: (weatherData: WeatherData) => {
+        const items: WeatherData[] = [];
+        const result = localStorage.getItem("favorites");
+        if (!result?.trim()) {
+            items.push(weatherData);
+            localStorage.setItem("favorites", JSON.stringify(items));
+            return;
+        }
+
+        const data = JSON.parse(result);
+        items.push(...data, weatherData);
+        localStorage.setItem("favorites", JSON.stringify(items));
     },
-    getForecastWeather: async ({lat, lon}: Coordinates) => {
-        // do something...
-    }
+    getStorage: () => {
+        const data: WeatherData[] = JSON.parse(localStorage.getItem("favorites") as string);
+        set({favorites: data});
+        return data;
+    },
 }));
 
-export default weatherStore;
+export default weatherPersistenceStore;
