@@ -1,5 +1,5 @@
 import { weatherAPI } from "@/service/weatherApi";
-import {createStore} from "zustand";
+import {create} from "zustand";
 import { Coordinates, ForecastData, WeatherData } from '../types/weather';
 
 type State = {
@@ -12,7 +12,7 @@ type Action = {
     getForecastWeather: (coords: Coordinates) => void;
 }
 
-export const weatherStore = createStore<State & Action>()((set) => ({
+const weatherStore = create<State & Action>()((set) => ({
     currentCity: null,
     currentCityForecast: null,
     getCurrentWeather: async (queryName: string) => {
@@ -25,4 +25,6 @@ export const weatherStore = createStore<State & Action>()((set) => ({
     getForecastWeather: async ({lat, lon}: Coordinates) => {
         // do something...
     }
-}))
+}));
+
+export default weatherStore;

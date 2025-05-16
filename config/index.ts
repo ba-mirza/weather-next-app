@@ -7,3 +7,8 @@ export const API_CONFIG = {
         appid: process.env.WEATHER_API_TOKEN,
     },
 };
+
+export const IMAGE_URL = {
+    FLAG: "http://purecatamphetamine.github.io/country-flag-icons/3x2/",
+    WICONS: "https://openweathermap.org/img/wn/"
+}
